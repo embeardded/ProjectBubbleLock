@@ -1,0 +1,20 @@
+# Build output
+build/
+out/
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.map
+
+# Editors and OS cruft
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local logs and scratch files
+*.log
+scratch/
