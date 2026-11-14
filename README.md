@@ -1,6 +1,6 @@
 # ProjectBubbleLock
 
-**Kinematic devices that lock the spirit-level bubble between the lines — handheld rig and future robotic arm.**
+**Kinematic devices that lock the spirit-level bubble between the lines.**
 
 ProjectBubbleLock stabilizes a payload that is normally left to gravity: a spirit level. A handheld rig counter-rotates its platform so the bubble stays inside the vial lines while the operator's hand moves. The same serial-chain kinematics and motor-control core is then reused as a robotic arm that can move freely while the bubble never crosses a line.
 
@@ -23,10 +23,6 @@ The tolerance is the product. "Level" is only the middle of the band the bubble 
 | Kinematics | Inverse of the sensed handle rotation | Inverse kinematics to a target pose |
 | Goal | Bubble stays between the lines | Bubble stays between the lines while the arm moves |
 | Shared | Serial-chain math, joint encoders, FOC motor layer | Same |
-
-## Status
-
-Design and simulation-planning stage. No firmware, hardware, or simulation assets are published yet; the repository will change shape as the first vertical slice lands.
 
 ## Roadmap
 
