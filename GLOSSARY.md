@@ -20,8 +20,16 @@ _Avoid_: Demo video
 
 ### Firmware architecture
 
+**Firmware**:
+The program that runs on a device's MCU, made of its Vertical Slices, adapters and Registry. It is what ships on the device.
+_Avoid_: Application, app, binary, image
+
+**Feature**:
+A named behaviour of a device, such as Hold Level or Yaw Follow, delivered by one or more Vertical Slices.
+_Avoid_: Module, component, behaviour (as a term)
+
 **Vertical Slice**:
-One use case of the firmware, such as Hold Level or calibration, built and delivered end to end and accepted by an automated test. Slices share data only through the Registry.
+One use case of the Firmware, such as Hold Level: pitch, built and delivered end to end and accepted by an automated test. Every slice belongs to exactly one Feature. Slices share data only through the Registry.
 _Avoid_: Layer, module, milestone
 
 **Registry**:

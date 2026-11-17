@@ -13,3 +13,10 @@ We chose this so a core use case can be built and tested without knowing which c
 
 - The fast motor-control loop (20 kHz) never enters the core. The core only sees Joint angles.
 - A sensor fusion filter is tested through its adapter's tests, not through core unit tests. Moving it into the core would be a deliberate reversal of this decision, not a cleanup.
+
+## Amendment: slices of one Feature may share internal code
+
+Vertical Slices are grouped into Features, such as Hold Level, made of the slices Hold Level: pitch and Hold Level: roll. Slices of the same Feature may share internal code, such as a control law that both use. Slices of different Features never share code; they share only through the Registry and the shared adapters. Slices still never call each other.
+
+- Shared internal code is tested only through the slices that use it, through their ports (ADR-0003).
+- Emulated Tests are built as one image per Feature, so a Feature's shared code is built once with its slices' tests.
