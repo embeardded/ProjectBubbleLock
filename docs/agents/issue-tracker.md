@@ -25,6 +25,7 @@ Plain labels only. There is no triage state machine, so don't apply `ready-for-a
 - `factory`: work on the Software Factory itself (bridge, spec layer, dev container, CI)
 - `slice`: delivers or grows one Vertical Slice
 - `adapter`: builds or grows an adapter that slices use, proven by Adapter Tests
+- `decision`: a design decision settled with the human (e.g. a grilling session), not implementation work
 
 ## Pull requests as a triage surface
 
