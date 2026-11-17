@@ -2,7 +2,7 @@
 
 ### Issue tracker
 
-Issues live in GitHub Issues for embeardded/ProjectBubbleLock (via `gh`). See `docs/agents/issue-tracker.md`.
+Issues live in GitHub Issues for embeardded/ProjectBubbleLock (via `gh`). Conventions and labels: see `docs/agents/issue-tracker.md`.
 
 ### Domain docs
 
