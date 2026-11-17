@@ -1,30 +1,28 @@
 # ProjectBubbleLock
 
-**Kinematic devices that lock the spirit-level bubble between the lines.**
+**Learning to build an embedded AI Software Factory, demonstrated through devices that keep a spirit-level bubble between the lines.**
 
-ProjectBubbleLock stabilizes a spirit level. A handheld rig holds the level platform at world level while the user moves the handle, so the bubble stays between the vial lines. The same joint chain, encoders, and motor control later drive a robotic arm that moves across its envelope while the bubble stays inside the lines.
+ProjectBubbleLock is a project for learning how to build an embedded AI **Software Factory**: a setup where AI agents write embedded firmware and get automated feedback on it, with no physical hardware needed.
 
-## How it works
+Terms in bold are defined in [GLOSSARY.md](GLOSSARY.md). Architectural decisions are recorded in [docs/adr](docs/adr).
 
-A spirit-level vial is an inclinometer. The bubble drifts as soon as the platform tilts. ProjectBubbleLock measures that tilt and cancels it with motors.
+## The devices
 
-An IMU on the level reports the platform orientation in world space. The kinematics solver inverts the measured handle rotation across the serial chain (yaw, roll, pitch), so a movement on one axis is corrected on the other two. Field-oriented control holds each motor at its target angle without backlash. The orientation loop is planned at 200 Hz and the motor loop at 20 kHz.
+The first device is the **Stabilizer**, a handheld device with three **Joints**. Its **Payload** is a pair of spirit-level vials, the **Bubble Indicators**: one for forward/back **Tilt** and one for sideways Tilt. However you move the **Handle**, the Stabilizer keeps the Payload so level that neither bubble crosses its lines.
 
-A rig passes when the bubble stays between the lines across a defined motion envelope. Reaching exact level is not required.
+The bubbles are the visible proof and the spec. Each vial's rated sensitivity sets the **Tilt Limit** that every test checks against. Turning about the vertical axis doesn't move the bubbles, so there the Stabilizer uses **Yaw Follow**: the Payload turns with the Handle, but smoothly.
 
-## Two devices, one core
+The second device, planned for later, is the **Robotic Arm**. It moves a Payload through 3D space and keeps it level with its own Joints.
 
-| | Handheld rig | Robotic arm |
-| --- | --- | --- |
-| Input | Measured handle motion | Commanded end-effector path |
-| Kinematics | Inverse of the sensed handle rotation | Inverse kinematics to a target pose |
-| Pass condition | Bubble stays between the lines | Bubble stays between the lines while the arm moves |
-| Shared | Serial-chain math, joint encoders, FOC motor layer | The same code |
+## How the factory works
 
-## Roadmap
+An agent takes one GitHub issue at a time, which delivers or grows one **Vertical Slice**. It loops on its own until every test level passes, and then a human reviews and merges the result. The agent never needs hardware, because everything the firmware touches is emulated or simulated.
 
-1. Stabilize one axis in simulation and measure the error.
-2. Add sensor fusion so vibration in the measured angle does not reach the control loop.
-3. Stabilize three axes together, with the platform staying inside vial tolerance under compound motion.
-4. Build the handheld rig and run it on real hardware.
-5. Run the same kinematics and motor code in robotic-arm mode.
+- **The MCU and its chips.** The unmodified firmware runs on an emulated MCU ([Renode](https://renode.io)), with the MCU's peripherals and the external chips modelled at register level. Agents write the chip models, which makes this level of fidelity affordable. See [ADR-0001](docs/adr/0001-emulate-chips-at-register-level-in-lockstep-with-physics.md).
+- **The physical world.** The Handle, the Joints and the **Payload Mount** are simulated in [MuJoCo](https://mujoco.org), in lockstep with the emulator. Runs are exact and repeatable, never flaky, and faster than real time.
+- **Testing.** Every test is a deep test through a port, never a test of internals ([ADR-0003](docs/adr/0003-deep-tests-only.md)). There are four levels:
+  - **Host Test:** a slice tested on the PC.
+  - **Emulated Test:** the same tests run on the emulated CPU.
+  - **Adapter Test:** an adapter tested against its emulated hardware, including simulated physics where the adapter drives something physical.
+  - **World Test:** executable specifications run end to end.
+- **Feedback.** When a World Test fails, its **Run Report** tells the agent in plain language what went wrong, when, and by how much.
