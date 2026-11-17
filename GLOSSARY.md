@@ -11,7 +11,7 @@ The whole project: the Software Factory plus the devices it produces.
 _Avoid_: BubbleLock
 
 **Software Factory**:
-The setup that has AI agents write embedded firmware and gives them automated, hardware-free feedback on it. It is the main thing this project exists to learn, and it is not tied to any one device.
+The setup that has AI agents write the Firmware of embedded devices and gives them automated, hardware-free feedback on it. It is the main thing this project exists to learn, and it is not tied to any one device.
 _Avoid_: AI factory, pipeline, harness
 
 **Showcase**:
@@ -33,7 +33,7 @@ One use case of the Firmware, such as Hold Level: pitch, built and delivered end
 _Avoid_: Layer, module, milestone
 
 **Registry**:
-The firmware's mechanism for sharing both state and events between Vertical Slices. It is the only way slices share data.
+The Firmware's mechanism for sharing both state and events between Vertical Slices. It is the only way slices share data.
 _Avoid_: Blackboard, global state, data bus
 
 **Telemetry**:
@@ -51,7 +51,7 @@ The Host Tests, built for the MCU and run on the emulated CPU.
 _Avoid_: Target test, on-target test
 
 **Adapter Test**:
-A deep test of one adapter through its port, running on the emulated CPU against emulated hardware: the MCU's own peripherals, any external chip, and simulated physics when the adapter drives something physical. It is driven and checked from outside the firmware and never tests the adapter's internals.
+A deep test of one adapter through its port, running on the emulated CPU against emulated hardware: the MCU's own peripherals, any external chip, and simulated physics when the adapter drives something physical. It is driven and checked from outside the Firmware and never tests the adapter's internals.
 _Avoid_: Driver test, peripheral test
 
 **World Test**:
@@ -115,11 +115,11 @@ The part of the Stabilizer the user holds and moves. The Stabilizer cancels its 
 _Avoid_: Grip, base
 
 **Hold Level**:
-The Stabilizer's main behaviour: keeping both Tilts within their Tilt Limits while the Handle moves.
+The Stabilizer's main Feature: keeping both Tilts within their Tilt Limits while the Handle moves.
 _Avoid_: Horizon lock, stabilization
 
 **Yaw Follow**:
-The Stabilizer's behaviour for turning about the vertical axis: the Payload turns with the Handle, but smoothly.
+The Stabilizer's Feature for turning about the vertical axis: the Payload turns with the Handle, but smoothly.
 _Avoid_: Pan mode, heading lock
 
 **Robotic Arm**:

@@ -23,7 +23,7 @@ File issues only into the user's own repo. Never file into `mattpocock/skills` (
 Plain labels only. There is no triage state machine, so don't apply `ready-for-agent` or any other triage role.
 
 - `factory`: work on the Software Factory itself (bridge, spec layer, dev container, CI)
-- `slice`: delivers or grows one Vertical Slice
+- `slice`: delivers one Vertical Slice of a Feature
 - `adapter`: builds or grows an adapter that slices use, proven by Adapter Tests
 - `decision`: a design decision settled with the human (e.g. a grilling session), not implementation work
 
