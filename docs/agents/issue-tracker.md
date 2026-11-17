@@ -18,6 +18,13 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 
 File issues only into the user's own repo. Never file into `mattpocock/skills` (the repo these skills come from) unless the user owns it. In a fork, `gh` can default to the upstream parent, so before the first `gh issue create` of a session, check the target with `gh repo view --json nameWithOwner` and confirm it with the user if it is not their repo.
 
+## Labels
+
+Plain labels only. There is no triage state machine, so don't apply `ready-for-agent` or any other triage role.
+
+- `factory`: work on the Software Factory itself (bridge, spec layer, dev container, CI)
+- `slice`: delivers or grows one Vertical Slice
+
 ## Pull requests as a triage surface
 
 **PRs as a request surface: no.** _(Set to `yes` if this repo treats external PRs as feature requests; `/triage` reads this flag.)_
