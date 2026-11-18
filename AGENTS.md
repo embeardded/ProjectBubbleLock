@@ -6,4 +6,4 @@ Issues live in GitHub Issues for embeardded/ProjectBubbleLock (via `gh`). Conven
 
 ### Domain docs
 
-Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+Before reading or changing GLOSSARY.md, an ADR or README.md, read `docs/agents/domain.md`.

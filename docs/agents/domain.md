@@ -1,6 +1,6 @@
 # Domain Docs
 
-How the engineering skills should consume this repo's domain documentation when exploring the codebase.
+How the engineering skills should consume and change this repo's domain documentation.
 
 ## Before exploring, read these
 
@@ -49,3 +49,12 @@ If the concept you need isn't in the glossary yet, that's a signal: either you'r
 If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:
 
 > _Contradicts ADR-0007 (event-sourced orders), but worth reopening because…_
+
+## Changing GLOSSARY.md or an ADR
+
+Both are living documents: each reads as one coherent account of what is true now. Git holds the history.
+
+1. **Rewrite whole.** Weave the change into the existing title, decision text and Consequences so the document reads as if written that way from the start. Then reread it top to bottom for sentences the change now contradicts.
+2. **Ripple.** Search README.md, GLOSSARY.md, every ADR, `docs/agents/` and the open issues for the changed term, its old wording and its _Avoid_ words, and update every hit.
+
+Done when the reread finds no contradiction and every remaining search hit uses the term as now defined.
