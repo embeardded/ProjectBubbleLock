@@ -6,11 +6,17 @@
 | m0 | snitch-no-to_chars | 31232 | 3648 | 28556 | 3624 | 2200 | no |
 | m0 | snitch-16-tests | 28656 | 1152 | 25980 | 1128 | 2200 | no |
 | m0 | own | 6732 | 144 | 4056 | 120 | 504 | no |
+| m0 | baseline-lto | 2636 | 24 | 0 | 0 | 88 | no |
+| m0 | snitch-no-to_chars-lto | 29020 | 3644 | 26384 | 3620 | 2024 | no |
+| m0 | own-lto | 6108 | 140 | 3472 | 116 | 432 | no |
 | m4 | baseline | 776 | 24 | 0 | 0 | 72 | no |
 | m4 | snitch | 139192 | 3648 | 138416 | 3624 | 2024 | no |
 | m4 | snitch-no-to_chars | 29776 | 3648 | 29000 | 3624 | 2024 | no |
 | m4 | snitch-16-tests | 27280 | 1152 | 26504 | 1128 | 2024 | no |
 | m4 | own | 3264 | 144 | 2488 | 120 | 480 | no |
+| m4 | baseline-lto | 720 | 24 | 0 | 0 | 80 | no |
+| m4 | snitch-no-to_chars-lto | 27340 | 3644 | 26620 | 3620 | 1760 | no |
+| m4 | own-lto | 2296 | 140 | 1576 | 116 | 384 | no |
 
 ---- UART output: m0 / snitch ----
 starting emulated-tests with snitch v1.3.2.c29ce5b
@@ -40,6 +46,34 @@ stack high-water: 504 bytes
 failed tests: 1
 === END OF RUN ===
 
+---- UART output: m0 / snitch-no-to_chars-lto ----
+starting emulated-tests with snitch v1.3.2.c29ce5b
+==========================================
+starting: tilt stays within the tilt limit after correction at common/tests.cpp:12
+finished: tilt stays within the tilt limit after correction
+starting: deliberate failure: tilt exceeds the tilt limit at common/tests.cpp:18
+failed: running test case "deliberate failure: tilt exceeds the tilt limit"
+          at common/tests.cpp:21
+          CHECK(tilt_deg <= tilt_limit_deg), got: 7.50000000e+00 > 5.00000000e+00
+finished: deliberate failure: tilt exceeds the tilt limit
+==========================================
+error: some tests failed (1 out of 2 test cases, 2 assertions)
+stack high-water: 2024 bytes
+failed tests: 1
+=== END OF RUN ===
+
+---- UART output: m0 / own-lto ----
+starting: tilt stays within the tilt limit after correction
+passed:   tilt stays within the tilt limit after correction
+starting: deliberate failure: tilt exceeds the tilt limit
+common/tests.cpp:21: FAILED: CHECK(tilt_deg <= tilt_limit_deg)
+  with values: 7.5000 <= 5.0000
+FAILED:   deliberate failure: tilt exceeds the tilt limit
+== 2 tests, 1 failed; 2 checks, 1 failed ==
+stack high-water: 432 bytes
+failed tests: 1
+=== END OF RUN ===
+
 ---- UART output: m4 / snitch ----
 starting emulated-tests with snitch v1.3.2.c29ce5b
 ==========================================
@@ -65,5 +99,33 @@ common/tests.cpp:21: FAILED: CHECK(tilt_deg <= tilt_limit_deg)
 FAILED:   deliberate failure: tilt exceeds the tilt limit
 == 2 tests, 1 failed; 2 checks, 1 failed ==
 stack high-water: 480 bytes
+failed tests: 1
+=== END OF RUN ===
+
+---- UART output: m4 / snitch-no-to_chars-lto ----
+starting emulated-tests with snitch v1.3.2.c29ce5b
+==========================================
+starting: tilt stays within the tilt limit after correction at common/tests.cpp:12
+finished: tilt stays within the tilt limit after correction
+starting: deliberate failure: tilt exceeds the tilt limit at common/tests.cpp:18
+failed: running test case "deliberate failure: tilt exceeds the tilt limit"
+          at common/tests.cpp:21
+          CHECK(tilt_deg <= tilt_limit_deg), got: 7.50000000e+00 > 5.00000000e+00
+finished: deliberate failure: tilt exceeds the tilt limit
+==========================================
+error: some tests failed (1 out of 2 test cases, 2 assertions)
+stack high-water: 1760 bytes
+failed tests: 1
+=== END OF RUN ===
+
+---- UART output: m4 / own-lto ----
+starting: tilt stays within the tilt limit after correction
+passed:   tilt stays within the tilt limit after correction
+starting: deliberate failure: tilt exceeds the tilt limit
+common/tests.cpp:21: FAILED: CHECK(tilt_deg <= tilt_limit_deg)
+  with values: 7.5000 <= 5.0000
+FAILED:   deliberate failure: tilt exceeds the tilt limit
+== 2 tests, 1 failed; 2 checks, 1 failed ==
+stack high-water: 384 bytes
 failed tests: 1
 === END OF RUN ===

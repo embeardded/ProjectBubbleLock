@@ -26,8 +26,12 @@ declare -A VARIANTS=(
     [snitch-no-to_chars]="snitch|$SNITCH/src/snitch.cpp|-Isnitch/config -I$SNITCH/include -DSNITCH_APPEND_TO_CHARS=0"
     [snitch-16-tests]="snitch|$SNITCH/src/snitch.cpp|-Isnitch/config -I$SNITCH/include -DSNITCH_APPEND_TO_CHARS=0 -DSNITCH_MAX_TEST_CASES=16"
     [own]="own|own/minitest.cpp|"
+    # Link-time optimization. Each "-lto" image is measured against baseline-lto.
+    [baseline-lto]="baseline||-flto"
+    [snitch-no-to_chars-lto]="snitch|$SNITCH/src/snitch.cpp|-Isnitch/config -I$SNITCH/include -DSNITCH_APPEND_TO_CHARS=0 -flto"
+    [own-lto]="own|own/minitest.cpp|-flto"
 )
-ORDER="baseline snitch snitch-no-to_chars snitch-16-tests own"
+ORDER="baseline snitch snitch-no-to_chars snitch-16-tests own baseline-lto snitch-no-to_chars-lto own-lto"
 
 rm -rf build && mkdir -p build
 for cpu in m0 m4; do
@@ -61,8 +65,9 @@ echo
 echo "| cpu | image | flash (B) | RAM .data+.bss (B) | framework flash | framework RAM | stack high-water | allocator linked |"
 echo "|---|---|---|---|---|---|---|---|"
 for cpu in m0 m4; do
-    read -r base_flash base_ram <"build/$cpu/baseline/size.txt"
     for v in $ORDER; do
+        base=baseline && [[ $v == *-lto ]] && base=baseline-lto
+        read -r base_flash base_ram <"build/$cpu/$base/size.txt"
         out="build/$cpu/$v"
         read -r flash ram <"$out/size.txt"
         run_renode "$out/image.elf" "$out/uart.txt"
@@ -73,7 +78,7 @@ for cpu in m0 m4; do
 done
 
 for cpu in m0 m4; do
-    for v in snitch own; do
+    for v in snitch own snitch-no-to_chars-lto own-lto; do
         echo
         echo "---- UART output: $cpu / $v ----"
         cat "build/$cpu/$v/uart.txt" 2>/dev/null || echo "(no output, see build/$cpu/$v/uart.txt.renode.log)"

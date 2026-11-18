@@ -39,6 +39,10 @@ The linker script has no heap and no `end` symbol, so anything that pulls in `_s
 | snitch, `SNITCH_APPEND_TO_CHARS=0` | 28,556 B | 3,624 B | ~2,120 B | ~5.7 KB | none | **fails size** |
 | snitch, also `MAX_TEST_CASES=16` | 25,980 B | 1,128 B | ~2,120 B | ~3.2 KB | none | **fails size** |
 | own runner | **4,056 B** | **120 B** | ~424 B | **~0.5 KB** | none | **passes** |
+| snitch, `SNITCH_APPEND_TO_CHARS=0`, `-flto` | 26,384 B | 3,620 B | ~1,936 B | ~5.4 KB | none | **fails size** |
+| own runner, `-flto` | 3,472 B | 116 B | ~344 B | ~0.5 KB | none | passes |
+
+`-flto` rows are measured against a `-flto` baseline (2,636 B flash).
 
 M4 is similar: snitch 26.5–138 KB flash, own runner 2.5 KB (smaller because floats are in hardware).
 Full table: `build-output.txt`.
