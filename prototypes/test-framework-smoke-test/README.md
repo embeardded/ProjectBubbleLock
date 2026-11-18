@@ -41,6 +41,10 @@ The linker script has no heap and no `end` symbol, so anything that pulls in `_s
 | own runner | **4,056 B** | **120 B** | ~424 B | **~0.5 KB** | none | **passes** |
 | snitch, `SNITCH_APPEND_TO_CHARS=0`, `-flto` | 26,384 B | 3,620 B | ~1,936 B | ~5.4 KB | none | **fails size** |
 | own runner, `-flto` | 3,472 B | 116 B | ~344 B | ~0.5 KB | none | passes |
+| CppUTest | 36,124 B | 1,652 B* | ~1,044 B | ~2.7 KB | **static pool** | **fails size, fails no-heap** |
+| CppUTest, `-flto` | 34,136 B | 1,572 B* | ~1,036 B | ~2.6 KB | **static pool** | **fails size, fails no-heap** |
+
+\* CppUTest's static RAM minus the 8 KB pool I reserved, plus the 648 B of it actually used.
 
 `-flto` rows are measured against a `-flto` baseline (2,636 B flash).
 
@@ -59,3 +63,26 @@ Notes:
   set `snitch::tests.print_callback`. Otherwise the first print calls `std::terminate`.
   `snitch::main()` hides this by calling `configure(argv)`.
 - `SNITCH_MAX_COMMAND_LINE_ARGS` can't go below 32: it also sizes the CLI option table.
+
+## CppUTest (added for comparison)
+
+Pinned at `42feb87` (master, 2026-11-03). Built without memory-leak detection or the C++
+standard library, and run through `TestRegistry` directly (`CommandLineTestRunner` needs argv
+and allocates its outputs). `cpputest/platform.cpp` fills every `PlatformSpecific*` hook:
+- UART output;
+- newlib `setjmp`/`longjmp` for fatal checks;
+- `vsnprintf` from eyalroz/printf (`22318ed`): newlib's version mallocs when it prints floats;
+- malloc/free and global `operator new`/`delete` on a static 8 KB pool.
+
+Findings:
+- **It needs an allocator.** Every `TEST` is created with `new` (`Utest.cpp`), and `SimpleString`
+  allocates through `PlatformSpecificMalloc`. A static pool works (648 B peak for these tests),
+  but that breaks the "no allocator linked" rule (decision 1).
+- **Size:** of the 36 KB on M0, eyalroz/printf is 4.7 KB and extra libgcc is 10.4 KB
+  (double-precision soft float and 64-bit division). CppUTest's own code is ~21 KB, mostly
+  virtual methods that `--gc-sections` can't drop (`cpputest-split.sh`).
+- **The tests had to be rewritten** (`cpputest/tests.cpp`): names must be identifiers, a plain
+  `CHECK(a <= b)` prints no values (so `CHECK_COMPARE`), and every check is fatal via `longjmp`.
+  The house style (decision 3) is non-fatal checks with no `longjmp`.
+- libgcc's 64-bit division routines carry unwind tables, so the linker script now defines
+  `__exidx_start`/`__exidx_end` (as vendor scripts do). That makes no difference to the other images.

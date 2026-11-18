@@ -6,17 +6,21 @@
 | m0 | snitch-no-to_chars | 31232 | 3648 | 28556 | 3624 | 2200 | no |
 | m0 | snitch-16-tests | 28656 | 1152 | 25980 | 1128 | 2200 | no |
 | m0 | own | 6732 | 144 | 4056 | 120 | 504 | no |
+| m0 | cpputest | 38800 | 9220 | 36124 | 9196 | 1124 | 08004330 T _Znaj 08004328 T _Znwj ; 8192 B static pool, 648 B used |
 | m0 | baseline-lto | 2636 | 24 | 0 | 0 | 88 | no |
 | m0 | snitch-no-to_chars-lto | 29020 | 3644 | 26384 | 3620 | 2024 | no |
 | m0 | own-lto | 6108 | 140 | 3472 | 116 | 432 | no |
+| m0 | cpputest-lto | 36772 | 9140 | 34136 | 9116 | 1124 | no; 8192 B static pool, 648 B used |
 | m4 | baseline | 776 | 24 | 0 | 0 | 72 | no |
 | m4 | snitch | 139192 | 3648 | 138416 | 3624 | 2024 | no |
 | m4 | snitch-no-to_chars | 29776 | 3648 | 29000 | 3624 | 2024 | no |
 | m4 | snitch-16-tests | 27280 | 1152 | 26504 | 1128 | 2024 | no |
 | m4 | own | 3264 | 144 | 2488 | 120 | 480 | no |
+| m4 | cpputest | 33916 | 9220 | 33140 | 9196 | 1024 | 08004420 T _Znaj 0800441c T _Znwj ; 8192 B static pool, 648 B used |
 | m4 | baseline-lto | 720 | 24 | 0 | 0 | 80 | no |
 | m4 | snitch-no-to_chars-lto | 27340 | 3644 | 26620 | 3620 | 1760 | no |
 | m4 | own-lto | 2296 | 140 | 1576 | 116 | 384 | no |
+| m4 | cpputest-lto | 31640 | 9140 | 30920 | 9116 | 1008 | no; 8192 B static pool, 648 B used |
 
 ---- UART output: m0 / snitch ----
 starting emulated-tests with snitch v1.3.2.c29ce5b
@@ -43,6 +47,21 @@ common/tests.cpp:21: FAILED: CHECK(tilt_deg <= tilt_limit_deg)
 FAILED:   deliberate failure: tilt exceeds the tilt limit
 == 2 tests, 1 failed; 2 checks, 1 failed ==
 stack high-water: 504 bytes
+failed tests: 1
+=== END OF RUN ===
+
+---- UART output: m0 / cpputest ----
+TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+cpputest/tests.cpp:25: error: Failure in TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+	CHECK_COMPARE(7.5 <= 5) failed
+
+ - 0 ms
+TEST(Tilt, StaysWithinTheTiltLimitAfterCorrection) - 0 ms
+
+Errors (1 failures, 2 tests, 2 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
+
+allocator pool high-water: 648 bytes
+stack high-water: 1124 bytes
 failed tests: 1
 === END OF RUN ===
 
@@ -74,6 +93,21 @@ stack high-water: 432 bytes
 failed tests: 1
 === END OF RUN ===
 
+---- UART output: m0 / cpputest-lto ----
+TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+cpputest/tests.cpp:25: error: Failure in TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+	CHECK_COMPARE(7.5 <= 5) failed
+
+ - 0 ms
+TEST(Tilt, StaysWithinTheTiltLimitAfterCorrection) - 0 ms
+
+Errors (1 failures, 2 tests, 2 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
+
+allocator pool high-water: 648 bytes
+stack high-water: 1124 bytes
+failed tests: 1
+=== END OF RUN ===
+
 ---- UART output: m4 / snitch ----
 starting emulated-tests with snitch v1.3.2.c29ce5b
 ==========================================
@@ -102,6 +136,21 @@ stack high-water: 480 bytes
 failed tests: 1
 === END OF RUN ===
 
+---- UART output: m4 / cpputest ----
+TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+cpputest/tests.cpp:25: error: Failure in TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+	CHECK_COMPARE(7.5 <= 5) failed
+
+ - 0 ms
+TEST(Tilt, StaysWithinTheTiltLimitAfterCorrection) - 0 ms
+
+Errors (1 failures, 2 tests, 2 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
+
+allocator pool high-water: 648 bytes
+stack high-water: 1024 bytes
+failed tests: 1
+=== END OF RUN ===
+
 ---- UART output: m4 / snitch-no-to_chars-lto ----
 starting emulated-tests with snitch v1.3.2.c29ce5b
 ==========================================
@@ -127,5 +176,20 @@ common/tests.cpp:21: FAILED: CHECK(tilt_deg <= tilt_limit_deg)
 FAILED:   deliberate failure: tilt exceeds the tilt limit
 == 2 tests, 1 failed; 2 checks, 1 failed ==
 stack high-water: 384 bytes
+failed tests: 1
+=== END OF RUN ===
+
+---- UART output: m4 / cpputest-lto ----
+TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+cpputest/tests.cpp:25: error: Failure in TEST(Tilt, DeliberateFailureTiltExceedsTheTiltLimit)
+	CHECK_COMPARE(7.5 <= 5) failed
+
+ - 0 ms
+TEST(Tilt, StaysWithinTheTiltLimitAfterCorrection) - 0 ms
+
+Errors (1 failures, 2 tests, 2 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
+
+allocator pool high-water: 648 bytes
+stack high-water: 1008 bytes
 failed tests: 1
 === END OF RUN ===

@@ -15,4 +15,10 @@ if [ ! -x renode/renode ]; then
 fi
 if [ ! -d snitch ]; then git clone -q https://github.com/snitch-org/snitch.git; fi
 git -C snitch checkout -q "$SNITCH_COMMIT"
+CPPUTEST_COMMIT=42feb8740bea189667528bda8a2fd0eb745da637 # master, 2026-11-03
+if [ ! -d cpputest ]; then git clone -q https://github.com/cpputest/cpputest.git; fi
+git -C cpputest checkout -q "$CPPUTEST_COMMIT"
+PRINTF_COMMIT=22318ed6bd87b0d597b4a4868d5b00daf66540fd # eyalroz/printf v6.4.0-1, 2026-06-27
+if [ ! -d printf ]; then git clone -q https://github.com/eyalroz/printf.git; fi
+git -C printf checkout -q "$PRINTF_COMMIT"
 echo "tools ready in $TOOLS"

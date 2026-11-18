@@ -23,7 +23,12 @@ SECTIONS
         . = ALIGN(4);
     } > FLASH
 
-    .ARM.exidx : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } > FLASH
+    .ARM.exidx :
+    {
+        __exidx_start = .;  /* as in vendor scripts; libgcc's unwinder needs these */
+        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+        __exidx_end = .;
+    } > FLASH
 
     .init_array :
     {
