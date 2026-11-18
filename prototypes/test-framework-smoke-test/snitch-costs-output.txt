@@ -1,0 +1,49 @@
+Reference image (the two tests): flash 29020 B, RAM 3644 B, stack 2024 B
+
+## Using a feature (one extra test; relative to one extra plain test)
+| feature | flash (B) | static RAM (B) | stack (B) |
+|---|---|---|---|
+| one more plain TEST_CASE with a float CHECK (relative to the reference) | 328 | 8 | 40 |
+| INT_VALUES | 944 | 0 | 0 |
+| TAGS | 16 | 0 | 0 |
+| SECTION | 1392 | 0 | 0 |
+| CAPTURE | 968 | 0 | 0 |
+| INFO | 664 | 0 | 0 |
+| CHECK_THAT | 252 | -4 | 0 |
+| CHECK_FALSE | 16 | 0 | 0 |
+| REQUIRE | 16 | 0 | 0 |
+| FAIL_CHECK | -104 | 0 | -40 |
+| SKIP_CHECK | 284 | 4 | 0 |
+| TEMPLATE_TEST_CASE | 1504 | 0 | 0 |
+| TEST_CASE_METHOD | -4 | 0 | 0 |
+| CONSTEXPR_CHECK | -56 | -8 | 0 |
+
+## Limits (cost per unit, from raising each limit; relative to the reference)
+| limit (current -> raised) | flash per unit | static RAM per unit | stack per unit |
+|---|---|---|---|
+| SNITCH_MAX_TEST_CASES (64 -> 128) | 52 | 52 | 0 |
+| SNITCH_MAX_EXPR_LENGTH (96 -> 192) | 0 | 0 | 1 |
+| SNITCH_MAX_MESSAGE_LENGTH (96 -> 192) | 0 | 0 | 4 |
+| SNITCH_MAX_TEST_NAME_LENGTH (64 -> 128) | 0 | 0 | 0 |
+| SNITCH_MAX_CAPTURES (2 -> 4) | 20 | 0 | 44 |
+| SNITCH_MAX_CAPTURE_LENGTH (32 -> 64) | 1 | 0 | 2 |
+| SNITCH_MAX_NESTED_SECTIONS (2 -> 4) | 16 | 0 | 68 |
+| SNITCH_MAX_UNIQUE_TAGS (4 -> 8) | 0 | 0 | 0 |
+| SNITCH_MAX_TAG_LENGTH (16 -> 32) | 0 | 0 | 0 |
+
+## Switches (relative to the reference)
+| switch | flash (B) | static RAM (B) | stack (B) |
+|---|---|---|---|
+| SNITCH_DECOMPOSE_SUCCESSFUL_ASSERTIONS=1 | 8 | 0 | 0 |
+| SNITCH_CONSTEXPR_FLOAT_USE_BITCAST=0 | 2064 | 0 | 0 |
+
+## Core: snitch's flash by area (build/m0/snitch-no-to_chars, no LTO, symbol sizes)
+| number and float formatting | 7134 |
+| console reporter (formatting the output) | 4412 |
+| libgcc (soft float, division) | 3026 |
+| registry: registration, run loop, reporting | 3024 |
+| other snitch | 2998 |
+| test filtering, tags, listing | 1608 |
+| startup, UART, tests, libc | 1342 |
+| sections, captures, info | 470 |
+| command-line parsing | 200 |

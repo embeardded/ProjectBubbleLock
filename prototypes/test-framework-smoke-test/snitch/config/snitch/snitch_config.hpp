@@ -13,17 +13,34 @@
 #define SNITCH_VERSION_PATCH 2
 
 // clang-format off
+// Each can be overridden with -D (snitch-costs.sh measures them one at a time).
 #ifndef SNITCH_MAX_TEST_CASES
-#define SNITCH_MAX_TEST_CASES             64  // lowered [5000]; build.sh also measures 16
+#define SNITCH_MAX_TEST_CASES             64  // lowered [5000]
 #endif
+#ifndef SNITCH_MAX_NESTED_SECTIONS
 #define SNITCH_MAX_NESTED_SECTIONS        2   // lowered [8]
+#endif
+#ifndef SNITCH_MAX_EXPR_LENGTH
 #define SNITCH_MAX_EXPR_LENGTH            96  // lowered [1024]
+#endif
+#ifndef SNITCH_MAX_MESSAGE_LENGTH
 #define SNITCH_MAX_MESSAGE_LENGTH         96  // lowered [1024]
+#endif
+#ifndef SNITCH_MAX_TEST_NAME_LENGTH
 #define SNITCH_MAX_TEST_NAME_LENGTH       64  // lowered [1024]
+#endif
+#ifndef SNITCH_MAX_TAG_LENGTH
 #define SNITCH_MAX_TAG_LENGTH             16  // lowered [256]
+#endif
+#ifndef SNITCH_MAX_CAPTURES
 #define SNITCH_MAX_CAPTURES               2   // lowered [8]
+#endif
+#ifndef SNITCH_MAX_CAPTURE_LENGTH
 #define SNITCH_MAX_CAPTURE_LENGTH         32  // lowered [256]
+#endif
+#ifndef SNITCH_MAX_UNIQUE_TAGS
 #define SNITCH_MAX_UNIQUE_TAGS            4   // lowered [1024]
+#endif
 #define SNITCH_MAX_COMMAND_LINE_ARGS      32  // lowered [1024]; also sizes the CLI option table, so >= 32
 #define SNITCH_MAX_REGISTERED_REPORTERS   1   // lowered [8]
 #define SNITCH_MAX_PATH_LENGTH            1   // lowered [1024]
@@ -37,11 +54,15 @@
 #define SNITCH_WITH_TIMINGS                    0 // no clock on bare metal
 #define SNITCH_WITH_SHORTHAND_MACROS           1
 #define SNITCH_DEFAULT_WITH_COLOR              0
+#ifndef SNITCH_CONSTEXPR_FLOAT_USE_BITCAST
 #define SNITCH_CONSTEXPR_FLOAT_USE_BITCAST     1
+#endif
 #ifndef SNITCH_APPEND_TO_CHARS
 #define SNITCH_APPEND_TO_CHARS                 1 // build.sh can override, to measure both
 #endif
+#ifndef SNITCH_DECOMPOSE_SUCCESSFUL_ASSERTIONS
 #define SNITCH_DECOMPOSE_SUCCESSFUL_ASSERTIONS 0
+#endif
 #define SNITCH_WITH_ALL_REPORTERS              0
 #define SNITCH_WITH_TEAMCITY_REPORTER          0
 #define SNITCH_WITH_CATCH2_XML_REPORTER        0
