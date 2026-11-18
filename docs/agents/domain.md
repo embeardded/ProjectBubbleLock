@@ -56,5 +56,6 @@ Both are living documents: each reads as one coherent account of what is true no
 
 1. **Rewrite whole.** Weave the change into the existing title, decision text and Consequences so the document reads as if written that way from the start. Then reread it top to bottom for sentences the change now contradicts.
 2. **Ripple.** Search README.md, GLOSSARY.md, every ADR, `docs/agents/` and the open issues for the changed term, its old wording and its _Avoid_ words, and update every hit.
+3. **Fresh review.** Before committing, have a fresh agent read the diff and each changed document as a newcomer, repeat the Ripple search, and fix every contradiction or outdated term it finds.
 
-Done when the reread finds no contradiction and every remaining search hit uses the term as now defined.
+Done when the fresh review finds no contradiction and every remaining search hit uses the term as now defined.
